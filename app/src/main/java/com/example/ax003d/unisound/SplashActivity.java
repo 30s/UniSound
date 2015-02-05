@@ -1,6 +1,7 @@
 package com.example.ax003d.unisound;
 
 import com.example.ax003d.unisound.util.SystemUiHider;
+import com.umeng.fb.FeedbackAgent;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -46,9 +47,14 @@ public class SplashActivity extends Activity {
      */
     private SystemUiHider mSystemUiHider;
 
+    private FeedbackAgent mAgent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mAgent = new FeedbackAgent(this);
+        mAgent.sync();
 
         setContentView(R.layout.activity_splash);
 
@@ -134,6 +140,7 @@ public class SplashActivity extends Activity {
     View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            mAgent.startFeedbackActivity();
             if (AUTO_HIDE) {
                 delayedHide(AUTO_HIDE_DELAY_MILLIS);
             }
